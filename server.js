@@ -9,14 +9,14 @@ const port = process.env.PORT;
 const mongoURI = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}/${process.env.DB_NAME}`;
 mongoose.set("useFindAndModify", false);
 app.use(
-    express.urlencoded({
-        extended: true,
-    })
+  express.urlencoded({
+    extended: true,
+  })
 );
 app.use(
-    cors({
-        origin: "*",
-    })
+  cors({
+    origin: "*",
+  })
 );
 app.options("*", cors());
 
@@ -24,14 +24,14 @@ app.options("*", cors());
 app.post("/app/v1/product", productControllers.create);
 
 mongoose
-    .connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
-    .then((response) => {
-        console.log("DB connection successful");
+  .connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then((response) => {
+    console.log("DB connection successful");
 
-        app.listen(port, () => {
-            console.log(`Buy The Way app listening on port: ${port}`);
-        });
-    })
-    .catch((err) => {
-        console.log(err);
+    app.listen(port, () => {
+      console.log(`Buy The Way app listening on port: ${port}`);
     });
+  })
+  .catch((err) => {
+    console.log(err);
+  });
