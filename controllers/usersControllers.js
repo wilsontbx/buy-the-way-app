@@ -118,11 +118,6 @@ const userControllers = {
         });
       });
   },
-
-  // logout: (req, res) => {
-  //     req.session.destroy();
-  //     res.redirect("/users/login");
-  // },
   dashboard: (req, res) => {
     res.json({
       data: "dummy",
