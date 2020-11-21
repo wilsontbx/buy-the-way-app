@@ -3,6 +3,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const productControllers = require("./controllers/productsControllers");
+const userControllers = require("./controllers/usersControllers");
 const app = express();
 const port = process.env.PORT;
 
@@ -22,6 +23,11 @@ app.options("*", cors());
 
 //ROUTES
 app.post("/app/v1/product", productControllers.create);
+
+//USER ROUTES
+app.post("/app/v1/users/register", userControllers.register);
+app.post("/app/v1/users/login", userControllers.login);
+app.post("/app/v1/users/dashboard", userControllers.dashboard);
 
 mongoose
   .connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
