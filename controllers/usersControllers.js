@@ -64,7 +64,6 @@ const userControllers = {
   },
 
   login: (req, res) => {
-    console.log(req.body);
     UserModel.findOne({
       email: req.body.email,
     })
@@ -106,7 +105,7 @@ const userControllers = {
         );
         // decode JWT to get raw values
         const rawJWT = jwt.decode(token);
-        // return token as json respons
+        // return token as json response
         res.json({
           success: true,
           token: token,
