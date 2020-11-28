@@ -34,6 +34,7 @@ const userControllers = {
         UserModel.create({
           first_name: req.body.first_name,
           last_name: req.body.last_name,
+          username: req.body.username,
           email: req.body.email,
           pwsalt: salt,
           hash: hash,
@@ -63,6 +64,7 @@ const userControllers = {
   },
 
   login: (req, res) => {
+    console.log(req.body);
     UserModel.findOne({
       email: req.body.email,
     })
@@ -94,6 +96,7 @@ const userControllers = {
           {
             first_name: result.first_name,
             last_name: result.last_name,
+            username: result.username,
             email: result.email,
           },
           process.env.JWT_SECRET,
@@ -103,7 +106,7 @@ const userControllers = {
         );
         // decode JWT to get raw values
         const rawJWT = jwt.decode(token);
-        // return token as json response
+        // return token as json respons
         res.json({
           success: true,
           token: token,
