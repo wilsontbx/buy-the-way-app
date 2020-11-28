@@ -14,15 +14,15 @@ const productSchema = new mongoose.Schema({
     // },
     imageurl: {
         type: String,
-        required: true,
+        // required: true,
     },
     country: {
         type: String,
-        required: true,
+        // required: true,
     },
     category: {
         type: String,
-        required: true,
+        // required: true,
     },
     showfood: [{
         foodexpiry: String,

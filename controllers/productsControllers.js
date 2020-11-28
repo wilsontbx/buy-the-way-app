@@ -2,6 +2,7 @@ const ProductModel = require("../models/products");
 // testing
 const productControllers = {
   create: (req, res) => {
+    console.log(req.body)
     ProductModel.create({
       productname: req.body.productname,
       imageurl: req.body.imageurl,

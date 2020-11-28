@@ -8,6 +8,7 @@ const app = express();
 const port = process.env.PORT;
 
 const mongoURI = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}/${process.env.DB_NAME}`;
+
 mongoose.set("useFindAndModify", false);
 app.use(
   express.urlencoded({
@@ -22,7 +23,7 @@ app.use(
 app.options("*", cors());
 
 //ROUTES
-app.post("/app/v1/product", productsControllers.create);
+app.post("/api/v1/products", productsControllers.create);
 
 //USER ROUTES
 app.post("/app/v1/users/register", usersControllers.register);
