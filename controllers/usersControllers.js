@@ -120,6 +120,16 @@ const userControllers = {
         });
       });
   },
+  getUserInfo: (req, res) => {
+    const token = req.body.token;
+    const rawJWT = jwt.decode(token);
+    res.json({
+      first_name: rawJWT.first_name,
+      last_name: rawJWT.last_name,
+      username: rawJWT.username,
+      email: rawJWT.email,
+    });
+  },
   dashboard: (req, res) => {
     res.json({
       data: "dummy",

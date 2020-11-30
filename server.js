@@ -25,12 +25,11 @@ app.options("*", cors());
 //ROUTES
 app.post("/api/v1/products", productsControllers.create);
 
-
 //USER ROUTES
 app.post("/api/v1/users/register", usersControllers.register);
 app.post("/api/v1/users/login", usersControllers.login);
 app.post("/api/v1/users/dashboard", usersControllers.dashboard);
-
+app.post("/api/v1/users/getuserinfo", usersControllers.getUserInfo);
 mongoose
   .connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then((response) => {
