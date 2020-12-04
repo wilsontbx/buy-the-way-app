@@ -2,7 +2,7 @@ const ProductModel = require("../models/products");
 // testing
 const productControllers = {
   create: (req, res) => {
-    console.log(req.body)
+    console.log(req.body);
     ProductModel.create({
       productname: req.body.productname,
       imageurl: req.body.imageurl,
@@ -14,14 +14,17 @@ const productControllers = {
     })
       .then((result) => {
         res.statusCode = 201;
-        res.json(result);
+        res.json({
+          success: true,
+          message: "The register email is exist",
+        });
       })
       .catch((err) => {
         console.log(err);
         res.send("nope");
       });
   },
-  index: (req, res) => { },
+  index: (req, res) => {},
 };
 
 module.exports = productControllers;
