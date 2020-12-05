@@ -1,5 +1,6 @@
 const ProductModel = require("../models/products");
-// testing
+const TransactionModel = require("../models/transaction");
+
 const productControllers = {
   create: (req, res) => {
     console.log(req.body)
@@ -9,32 +10,32 @@ const productControllers = {
 
     })
       .then(result => {
+        //productname exists
         if (result != null) {
 
-          ProductModel.updateOne({
-            productname: result.productname
-          },
-            {
-              $addToSet: {
-                transaction: {
-                  url: req.body.url,
-                  qty: req.body.qty,
-                  price: req.body.price,
-                  message: req.body.message,
-                  receipt: req.body.receipt
-                }
-              }
-            },
-            { upsert: false })
+          TransactionModel.create({
+            productname: result.productname,
+            url: req.body.url,
+            qty: req.body.qty,
+            price: req.body.price,
+            message: req.body.message,
+            receipt: req.body.receipt
+          })
+            //creation is successful
             .then((result) => {
+              //201 : Created
               res.statusCode = 201;
+              //respond json result back to frontend
               res.json(result);
             })
+            //creation is not successful
             .catch((err) => {
+              res.statusCode = 409;
               console.log(err);
-              res.send("nope");
+              res.send("Error occurs during creation");
             });
         }
+        //productname not exists
         else if (result == null) {
 
           ProductModel.create({
@@ -45,43 +46,38 @@ const productControllers = {
             foodchilled: req.body.foodchilled,
             foodspecial: req.body.foodspecial,
             collectspecial: req.body.collectspecial,
-            transaction: {
-              url: req.body.url,
-              qty: req.body.qty,
-              price: req.body.price,
-              message: req.body.message,
-              receipt: req.body.receipt
-            }
           })
+
             .then((result) => {
-              res.statusCode = 201;
-              res.json(result);
+              TransactionModel.create({
+                productname: req.body.productname,
+                url: req.body.url,
+                qty: req.body.qty,
+                price: req.body.price,
+                message: req.body.message,
+                receipt: req.body.receipt
+              })
+                //creation is successful
+                .then((result) => {
+                  //201 : Created
+                  res.statusCode = 201;
+                  //respond json result back to frontend
+                  res.json(result);
+                })
+                //creation is not successful
+                .catch((err) => {
+                  res.statusCode = 409;
+                  console.log(err);
+                  res.send("Error occurs during creation");
+                });
             })
+            //catch error during product model creation
             .catch((err) => {
               console.log(err);
               res.send("nope");
             });
         }
       })
-
-
-    // ProductModel.create({
-    //     productname: req.body.productname,
-    //     imageurl: req.body.imageurl,
-    //     country: req.body.country,
-    //     foodexpiry: req.body.foodexpiry,
-    //     foodchilled: req.body.foodchilled,
-    //     foodspecial: req.body.foodspecial,
-    //     collectspecial: req.body.collectspecial,
-    //   })
-    //       .then((result) => {
-    //         res.statusCode = 201;
-    //         res.json(result);
-    //       })
-    //       .catch((err) => {
-    //         console.log(err);
-    //         res.send("nope");
-    //       });
   },
   index: (req, res) => { },
 };
