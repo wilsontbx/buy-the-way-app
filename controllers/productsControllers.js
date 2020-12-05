@@ -2,7 +2,7 @@ const ProductModel = require("../models/products");
 const TransactionModel = require("../models/transaction");
 
 const productControllers = {
-  create: (req, res) => {
+  createRequest: (req, res) => {
     console.log(req.body);
 
     ProductModel.findOne({

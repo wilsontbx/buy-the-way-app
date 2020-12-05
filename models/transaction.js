@@ -1,21 +1,27 @@
 const mongoose = require("mongoose");
 
 const transactionSchema = new mongoose.Schema({
-    productname: {
-        type: String,
-        required: true,
-        // cannot be blank or null
-    },
-    url: String,
-    qty: Number,
-    price: String,
-    message: String,
-    receipt: String,
-
+  productslug: {
+    type: String,
+    required: true,
+  },
+  url: String,
+  qty: {
+    type: Number,
+    required: true,
+  },
+  price: {
+    type: Number,
+    required: true,
+  },
+  message: String,
+  receipt: String,
+  email: {
+    type: String,
+    required: true,
+  },
 });
 
 const TransactionModel = mongoose.model("Transaction", transactionSchema);
-//Transaction : collection
 
 module.exports = TransactionModel;
-//add TransactionModel to library
