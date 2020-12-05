@@ -3,6 +3,7 @@ const TransactionModel = require("../models/transaction");
 
 const productControllers = {
   create: (req, res) => {
+
     console.log(req.body)
 
     ProductModel.findOne({
@@ -77,9 +78,10 @@ const productControllers = {
               res.send("nope");
             });
         }
+
       })
   },
-  index: (req, res) => { },
+  index: (req, res) => {},
 };
 
 module.exports = productControllers;

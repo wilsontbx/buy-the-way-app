@@ -23,7 +23,7 @@ app.use(
 app.options("*", cors());
 
 //ROUTES
-app.post("/api/v1/products", productsControllers.create);
+app.post("/api/v1/products/create", productsControllers.create);
 
 //USER ROUTES
 app.post("/api/v1/users/register", usersControllers.register);
