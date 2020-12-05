@@ -41,7 +41,15 @@ const productSchema = new mongoose.Schema({
         type: Date,
         required: true,
         default: Date.now
-    }
+    },
+    transaction: [{
+        url: String,
+        qty: Number,
+        price: String,
+        message: String,
+        receipt: String,
+    }],
+
 });
 
 const ProductModel = mongoose.model("Product", productSchema);
