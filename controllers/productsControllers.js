@@ -1,5 +1,5 @@
 const ProductModel = require("../models/products");
-// testing
+
 const productControllers = {
   create: (req, res) => {
     console.log(req.body);
@@ -22,6 +22,32 @@ const productControllers = {
       .catch((err) => {
         console.log(err);
         res.send("nope");
+      });
+  },
+  search: (req, res) => {
+    const keyword = req.body.keyword;
+    ProductModel.find({ productname: { $regex: keyword } })
+      .limit(10)
+      .then((result) => {
+        if (!result) {
+          res.statueCode = 401;
+          res.json({
+            success: false,
+            message: "search result is invalid",
+          });
+          return;
+        }
+        res.json({
+          success: true,
+          result: result,
+        });
+      })
+      .catch((err) => {
+        res.statusCode = 500;
+        res.json({
+          success: false,
+          message: "something wrong in search function",
+        });
       });
   },
   index: (req, res) => {},

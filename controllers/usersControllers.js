@@ -122,14 +122,35 @@ const userControllers = {
   },
   getUserInfo: (req, res) => {
     const token = req.body.token;
-    const rawJWT = jwt.decode(token);
-    res.json({
-      success: true,
-      first_name: rawJWT.first_name,
-      last_name: rawJWT.last_name,
-      username: rawJWT.username,
+    const rawJWT = jwt.verify(token, process.env.JWT_SECRET);
+    console.log(rawJWT);
+    UserModel.findOne({
       email: rawJWT.email,
-    });
+    })
+      .then((result) => {
+        if (!result) {
+          res.statueCode = 401;
+          res.json({
+            success: false,
+            message: "token is invalid",
+          });
+          return;
+        }
+        res.json({
+          success: true,
+          first_name: result.first_name,
+          last_name: result.last_name,
+          username: result.username,
+          email: result.email,
+        });
+      })
+      .catch((err) => {
+        res.statusCode = 500;
+        res.json({
+          success: false,
+          message: "unable to get user info",
+        });
+      });
   },
   dashboard: (req, res) => {
     res.json({
