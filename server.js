@@ -24,7 +24,7 @@ app.options("*", cors());
 
 //ROUTES
 app.post("/api/v1/products/create", productsControllers.create);
-
+app.post("/api/v1/products/search", productsControllers.search);
 //USER ROUTES
 app.post("/api/v1/users/register", usersControllers.register);
 app.post("/api/v1/users/login", usersControllers.login);
