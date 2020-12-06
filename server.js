@@ -27,9 +27,11 @@ app.options("*", cors());
 app.post(
   "/api/v1/products/request/create",
   verifyJWT,
-  productsControllers.createRequest
-);
+  productsControllers.createRequest);
+
 app.post("/api/v1/products/search", productsControllers.search);
+app.get("/api/v1/products/list", productsControllers.productslist);
+
 //USER ROUTES
 app.post("/api/v1/users/register", usersControllers.register);
 app.post("/api/v1/users/login", usersControllers.login);
