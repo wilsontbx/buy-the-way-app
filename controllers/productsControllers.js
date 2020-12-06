@@ -102,10 +102,9 @@ const productControllers = {
         });
       });
   },
-  index: (req, res) => { },
+
 
   preOrderCreate: (req, res) => {
-    console.log(req.body.productname, req.body)
     PreOrderModel.create({
       productname: req.body.productname,
       imageURL: req.body.imgURL,
@@ -117,10 +116,21 @@ const productControllers = {
       collectspecial: req.body.collectspecial,
       returndate: req.body.returndate
     })
+      //creation is successful
+      .then((result) => {
+        //201 : Created
+        res.statusCode = 201;
+        //respond json result back to frontend
+        res.json(result);
+      })
+      //creation is not successful
+      .catch((err) => {
+        res.statusCode = 409;
+        console.log(err);
+        res.send("Error occurs during creation");
+      });
 
-    // console.log(req.body.productname)
-    // res.send(req.body.productname)
-  }
+  },
 };
 
 module.exports = productControllers;
