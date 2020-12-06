@@ -24,6 +24,9 @@ app.use(
 app.options("*", cors());
 
 //ROUTES
+app.get("/", (req, res) => {
+  res.send("Welcome to buy-the-way api");
+});
 app.post(
   "/api/v1/products/request/create",
   verifyJWT,
