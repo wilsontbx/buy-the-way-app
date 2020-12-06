@@ -123,7 +123,6 @@ const userControllers = {
   getUserInfo: (req, res) => {
     const token = req.headers.auth_token;
     const rawJWT = jwt.decode(token);
-    console.log(rawJWT);
     UserModel.findOne({
       email: rawJWT.email,
     })
