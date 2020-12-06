@@ -102,6 +102,11 @@ const productControllers = {
       });
   },
   index: (req, res) => {},
+
+  preOrderCreate: (req,res) => {
+    console.log(req.body)
+    res.send(req.body)
+  }
 };
 
 module.exports = productControllers;

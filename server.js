@@ -35,6 +35,7 @@ app.post("/api/v1/users/register", usersControllers.register);
 app.post("/api/v1/users/login", usersControllers.login);
 app.post("/api/v1/users/dashboard", usersControllers.dashboard);
 app.post("/api/v1/users/getuserinfo", verifyJWT, usersControllers.getUserInfo);
+app.post("/api/v1/products/preorder/create", productsControllers.preOrderCreate)
 
 function verifyJWT(req, res, next) {
   // get the jwt token from the request header
