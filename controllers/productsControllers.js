@@ -143,7 +143,7 @@ const productControllers = {
       foodchilled: req.body.foodchilled,
       foodspecial: req.body.foodspecial,
       collectspecial: req.body.collectspecial,
-      returndate: req.body.returndate
+      returndate: req.body.returndate,
     })
       //creation is successful
       .then((result) => {
@@ -158,7 +158,6 @@ const productControllers = {
         console.log(err);
         res.send("Error occurs during creation");
       });
-
   },
   productslist: (req, res) => {
     ProductModel.find().then((results) => {
@@ -167,7 +166,6 @@ const productControllers = {
   },
 
   index: (req, res) => {},
-
 };
 
 module.exports = productControllers;
