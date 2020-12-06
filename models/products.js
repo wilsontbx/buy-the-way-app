@@ -11,7 +11,7 @@ const productSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
-  imageurl: {
+  imageUrl: {
     type: String,
     required: true,
   },
@@ -23,10 +23,10 @@ const productSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  foodexpiry: String,
-  foodchilled: String,
-  foodspecial: String,
-  collectspecial: Boolean,
+  foodexpiry: Boolean,
+  foodchilled: Boolean,
+  foodspecial: Boolean,
+  collectspecial: String,
   created_at: {
     type: Date,
     required: true,

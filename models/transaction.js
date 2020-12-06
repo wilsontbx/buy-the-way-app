@@ -16,7 +16,7 @@ const transactionSchema = new mongoose.Schema({
   },
   message: String,
   receipt: String,
-  email: {
+  useremail: {
     type: String,
     required: true,
   },
