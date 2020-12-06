@@ -1,3 +1,4 @@
+const PreOrderModel = require("../models/preorders");
 const ProductModel = require("../models/products");
 const TransactionModel = require("../models/transaction");
 const _ = require("lodash");
@@ -132,7 +133,33 @@ const productControllers = {
         });
       });
   },
+  preOrderCreate: (req, res) => {
+    PreOrderModel.create({
+      productname: req.body.productname,
+      imageURL: req.body.imgURL,
+      country: req.body.country,
+      category: req.body.category,
+      foodexpiry: req.body.foodexpiry,
+      foodchilled: req.body.foodchilled,
+      foodspecial: req.body.foodspecial,
+      collectspecial: req.body.collectspecial,
+      returndate: req.body.returndate
+    })
+      //creation is successful
+      .then((result) => {
+        //201 : Created
+        res.statusCode = 201;
+        //respond json result back to frontend
+        res.json(result);
+      })
+      //creation is not successful
+      .catch((err) => {
+        res.statusCode = 409;
+        console.log(err);
+        res.send("Error occurs during creation");
+      });
 
+  },
   productslist: (req, res) => {
     ProductModel.find().then((results) => {
       res.json(results);
@@ -140,6 +167,7 @@ const productControllers = {
   },
 
   index: (req, res) => {},
+
 };
 
 module.exports = productControllers;
