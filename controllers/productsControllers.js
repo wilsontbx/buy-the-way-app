@@ -1,3 +1,4 @@
+const PreOrderModel = require("../models/preorders");
 const ProductModel = require("../models/products");
 const TransactionModel = require("../models/transaction");
 
@@ -101,11 +102,24 @@ const productControllers = {
         });
       });
   },
-  index: (req, res) => {},
+  index: (req, res) => { },
 
-  preOrderCreate: (req,res) => {
-    console.log(req.body)
-    res.send(req.body)
+  preOrderCreate: (req, res) => {
+    console.log(req.body.productname, req.body)
+    PreOrderModel.create({
+      productname: req.body.productname,
+      imageURL: req.body.imgURL,
+      country: req.body.country,
+      category: req.body.category,
+      foodexpiry: req.body.foodexpiry,
+      foodchilled: req.body.foodchilled,
+      foodspecial: req.body.foodspecial,
+      collectspecial: req.body.collectspecial,
+      returndate: req.body.returndate
+    })
+
+    // console.log(req.body.productname)
+    // res.send(req.body.productname)
   }
 };
 
