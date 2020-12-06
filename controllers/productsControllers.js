@@ -101,7 +101,15 @@ const productControllers = {
         });
       });
   },
-  index: (req, res) => {},
+
+  productslist: (req, res) => {
+    ProductModel.find()
+      .then(results => {
+        res.json(results)
+      })
+  },
+
+  index: (req, res) => { },
 };
 
 module.exports = productControllers;
