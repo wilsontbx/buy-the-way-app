@@ -27,7 +27,8 @@ app.options("*", cors());
 app.post(
   "/api/v1/products/request/create",
   verifyJWT,
-  productsControllers.createRequest);
+  productsControllers.createRequest
+);
 
 app.post("/api/v1/products/search", productsControllers.search);
 app.get("/api/v1/products/list", productsControllers.productslist);
@@ -54,7 +55,6 @@ function verifyJWT(req, res, next) {
   try {
     // if verify success, proceed
     const userData = jwt.verify(authToken, process.env.JWT_SECRET);
-    console.log(userData);
     next();
   } catch (err) {
     // if fail, return error msg
