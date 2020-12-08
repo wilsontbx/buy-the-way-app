@@ -7,13 +7,11 @@ const productControllers = {
   createRequest: (req, res) => {
     const existingProduct = req.body.existingProduct;
     const productslug = _.kebabCase(req.body.productname);
-    console.log(productslug);
     ProductModel.findOne({
       productname: req.body.productname,
     })
       .then((result) => {
         //productname exists
-        console.log(result);
         if (result != null && existingProduct) {
           TransactionModel.create({
             productslug: productslug,
@@ -107,14 +105,14 @@ const productControllers = {
   },
   search: (req, res) => {
     const keyword = req.body.keyword;
-    ProductModel.find({ productname: { $regex: keyword } })
+    ProductModel.find({ productname: { $regex: keyword, $options: "i" } })
       .limit(10)
       .then((result) => {
         if (!result) {
           res.statueCode = 401;
           res.json({
             success: false,
-            message: "search result is invalid",
+            message: "search result is empty",
           });
           return;
         }
