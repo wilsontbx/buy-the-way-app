@@ -11,89 +11,60 @@ const productControllers = {
       productname: req.body.productname,
     })
       .then((result) => {
-        //productname exists
-        if (result != null && existingProduct) {
-          TransactionModel.create({
-            productslug: productslug,
-            url: req.body.url,
-            qty: req.body.qty,
-            price: req.body.price,
-            message: req.body.message,
-            receipt: req.body.receipt,
-            useremail: req.body.useremail,
-          })
-            //creation is successful
-            .then((result) => {
-              //201 : Created
+        TransactionModel.create({
+          productslug: productslug,
+          url: req.body.url,
+          qty: req.body.qty,
+          price: req.body.price,
+          message: req.body.message,
+          receipt: req.body.receipt,
+          useremail: req.body.useremail,
+          statusopen: true,
+        })
+          .then((resultTransaction) => {
+            if (result != null && existingProduct) {
               res.statusCode = 201;
-              //respond json result back to frontend
               res.json({
                 success: true,
-                result: result,
+                result: resultTransaction,
                 message: "success create transaction for existing product",
               });
-            })
-            //creation is not successful
-            .catch((err) => {
-              res.statusCode = 409;
-              res.json({
-                success: false,
-                message: "error in create transaction for existing product",
-              });
-            });
-        }
-        //productname not exists
-        else if (result == null || !existingProduct) {
-          ProductModel.create({
-            productname: req.body.productname,
-            productslug: productslug,
-            imageUrl: req.body.imageUrl,
-            country: req.body.country,
-            category: req.body.category,
-            foodexpiry: req.body.foodexpiry,
-            foodchilled: req.body.foodchilled,
-            foodspecial: req.body.foodspecial,
-            collectspecial: req.body.collectspecial,
-          })
-            .then((result) => {
-              TransactionModel.create({
+            } else if (result == null || !existingProduct) {
+              ProductModel.create({
+                productname: req.body.productname,
                 productslug: productslug,
-                url: req.body.url,
-                qty: req.body.qty,
-                price: req.body.price,
-                message: req.body.message,
-                receipt: req.body.receipt,
-                useremail: req.body.useremail,
+                imageUrl: req.body.imageUrl,
+                country: req.body.country,
+                category: req.body.category,
+                foodexpiry: req.body.foodexpiry,
+                foodchilled: req.body.foodchilled,
+                foodspecial: req.body.foodspecial,
+                collectspecial: req.body.collectspecial,
               })
-                //creation is successful
                 .then((result) => {
-                  //201 : Created
                   res.statusCode = 201;
-                  //respond json result back to frontend
                   res.json({
                     success: true,
                     result: result,
-                    message: "success create transaction for new product",
+                    message: "success create new product and transaction",
                   });
                 })
-                //creation is not successful
                 .catch((err) => {
                   res.statusCode = 409;
                   res.json({
                     success: false,
-                    message: "error in create transaction for new product",
+                    message: "error in create new product and transaction",
                   });
                 });
-            })
-            //catch error during product model creation
-            .catch((err) => {
-              res.statusCode = 500;
-              res.json({
-                success: false,
-                message: "error in create new product",
-              });
+            }
+          })
+          .catch((err) => {
+            res.statusCode = 500;
+            res.json({
+              success: false,
+              message: "error create transaction",
             });
-        }
+          });
       })
       .catch((err) => {
         res.statusCode = 500;
@@ -103,6 +74,7 @@ const productControllers = {
         });
       });
   },
+
   search: (req, res) => {
     const keyword = req.body.keyword;
     ProductModel.find({ productname: { $regex: keyword, $options: "i" } })
