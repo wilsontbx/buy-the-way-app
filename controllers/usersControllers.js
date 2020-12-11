@@ -157,7 +157,7 @@ const userControllers = {
     });
   },
   updateUserInfo: (req, res) => {
-    console.log(req.body)
+    
     const token = req.headers.auth_token
     const rawJWT = jwt.decode(token);
     UserModel.findOneAndUpdate({
