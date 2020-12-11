@@ -104,7 +104,7 @@ const productControllers = {
       });
   },
   preOrderCreate: (req, res) => {
-    console.log(req.body)
+    console.log(req.body);
     PreOrderModel.create({
       productname: req.body.productname,
       imageURL: req.body.imgURL,
@@ -115,7 +115,7 @@ const productControllers = {
       foodspecial: req.body.foodspecial,
       collectspecial: req.body.collectspecial,
       returndate: req.body.returndate,
-      email:req.body.email
+      email: req.body.email,
     })
       //creation is successful
       .then((result) => {
@@ -132,12 +132,64 @@ const productControllers = {
       });
   },
   productslist: (req, res) => {
-    ProductModel.find().then((results) => {
-      res.json(results);
-    });
+    ProductModel.find()
+      .limit(8)
+      .then((results) => {
+        res.json(results);
+      });
   },
+  getProductBySlug: (req, res) => {
+    const slug = req.params.slug;
+    ProductModel.findOne({
+      productslug: slug,
+    })
+      .then((productDetails) => {
+        if (!productDetails) {
+          res.statueCode = 401;
+          res.json({
+            success: false,
+            message: "This product not exist",
+          });
+          return;
+        }
+        TransactionModel.find({
+          productslug: slug,
+        })
+          .sort({ updated_at: "desc" })
+          .then((transactionDetails) => {
+            if (!transactionDetails) {
+              res.statueCode = 401;
+              res.json({
+                success: false,
+                message: "This transaction not exist",
+              });
+              return;
+            }
 
-  index: (req, res) => {},
+            res.statusCode = 200;
+            res.json({
+              success: true,
+              message: "Product and Transaction found",
+              product: productDetails,
+              transaction: transactionDetails,
+            });
+          })
+          .catch((err) => {
+            res.statusCode = 409;
+            res.json({
+              success: false,
+              message: "Transaction not found",
+            });
+          });
+      })
+      .catch((err) => {
+        res.statusCode = 409;
+        res.json({
+          success: false,
+          message: "Product not found",
+        });
+      });
+  },
 };
 
 module.exports = productControllers;
