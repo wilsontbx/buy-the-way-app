@@ -35,14 +35,18 @@ app.post(
 
 app.post("/api/v1/products/search", productsControllers.search);
 app.get("/api/v1/products/list", productsControllers.productslist);
+app.get("/api/v1/products/:slug", productsControllers.getProductBySlug);
 
 //USER ROUTES
 app.post("/api/v1/users/register", usersControllers.register);
 app.post("/api/v1/users/login", usersControllers.login);
 app.post("/api/v1/users/dashboard", usersControllers.dashboard);
 app.post("/api/v1/users/getuserinfo", verifyJWT, usersControllers.getUserInfo);
-app.post("/api/v1/products/preorder/create", productsControllers.preOrderCreate)
-app.post("/api/v1/users/update", verifyJWT, usersControllers.updateUserInfo)
+app.post(
+  "/api/v1/products/preorder/create",
+  productsControllers.preOrderCreate
+);
+app.post("/api/v1/users/update", verifyJWT, usersControllers.updateUserInfo);
 
 function verifyJWT(req, res, next) {
   // get the jwt token from the request header

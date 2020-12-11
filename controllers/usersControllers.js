@@ -156,19 +156,21 @@ const userControllers = {
       data: "dummy",
     });
   },
-  updateUserInfo: (req, res) => {
-    
+  updateUserInfo: (req, res) => {    
     const token = req.headers.auth_token
+
     const rawJWT = jwt.decode(token);
-    UserModel.findOneAndUpdate({
-      email: rawJWT.email
-    }, {
-      email:req.body.email}
-    
+    UserModel.findOneAndUpdate(
+      {
+        email: rawJWT.email,
+      },
+      {
+        email: req.body.email,
+      }
     ).then((response) => {
-      console.log(response)
-    })
-  }
+      console.log(response);
+    });
+  },
 };
 
 module.exports = userControllers;
