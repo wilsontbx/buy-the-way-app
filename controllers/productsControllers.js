@@ -132,6 +132,7 @@ const productControllers = {
       });
   },
   preOrderCreate: (req, res) => {
+    console.log(req.body)
     PreOrderModel.create({
       productname: req.body.productname,
       imageURL: req.body.imgURL,
@@ -142,6 +143,7 @@ const productControllers = {
       foodspecial: req.body.foodspecial,
       collectspecial: req.body.collectspecial,
       returndate: req.body.returndate,
+      email:req.body.email
     })
       //creation is successful
       .then((result) => {

@@ -27,11 +27,12 @@ const preOrderSchema = new mongoose.Schema({
   foodchilled: String,
   foodspecial: String,
   collectspecial: String,
-  returndate:String
+  returndate:String,
+  email:String
   // created_at: {
   //   type: Date,
   //   required: true,
-  //   default: Date.now,
+  //   default: Date.now,nod
   // },
   // updated_at: {
   //   type: Date,
